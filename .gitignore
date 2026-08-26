@@ -1,0 +1,31 @@
+## .NET / MSBuild
+bin/
+obj/
+*.user
+*.suo
+*.userprefs
+
+## Build results
+[Dd]ebug/
+[Rr]elease/
+[Aa]rtifacts/
+
+## Rider / VS
+.vs/
+.idea/
+*.sw?
+
+## Local database / secrets
+*.db
+*.sqlite
+*.sqlite3
+appsettings.Development.json
+secrets.json
+
+## OS
+.DS_Store
+Thumbs.db
+
+## Logs
+*.log
+logs/
