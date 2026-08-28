@@ -1,0 +1,41 @@
+Well, it isn't really because this is what's referred to as synchronous code. 
+And that means whilst this request is going to the database, the thread that a request comes in on is blocked intil the data is returned and the request is finished.
+Now is that a big deal? Is this request to our database going to take a long time? And what's better to do is to make this asynchronous.
+
+And you can think of it like the restaurant analogy. So if you go into a restaurant, you attract the waier or waitress attention, you order your food,
+And then she goes off, or she goes off to the kitchen to give the order to the chef.
+
+Now, in the not asynchrounous world, what we have in the second method here, then wthat waiter stays in the kitchen until the chef
+has coooked the food, and then the waiter brings the food back to your table
+in the meantime, if there's other customers comming into the restaurant,
+that waiter cannot server those other customers because he's waiting in the kitchen.
+That would be the synchronous equivalent in this version of the code where we're asynchronous.
+This operates how a restaurant would normally operate, the waiter comes along and takes your food order.
+They go and deliver the food order to the kitchen, but they don't wait for the order to be prepared and coooked.
+They go and service other customers and take their orders and then deliver those orders to the kitchen.
+The other thread in this case, and then once the request has benn fulfilled a that point, the request
+is returned to the orignal thread. The task is then fulfilled and we can then return the members.
+So this is typically how we would create our API endpoints.
+
+We would use asynchronous code and entity framework has synchronous and asynchronous versions of each
+of its different methods.
+
+There's a much better tool that we can use, and postman is that better tool.
+
+### Summarize
+
+This lecture focuses on the significance of making code asynchronous in a .NET API controller to improve scalability and performance. Here are the key points discussed:
+
+    1. Synchronous vs. Asynchronous Code: The lecturer explains that synchronous code blocks the thread while waiting for a database response, which can limit the server's ability to handle multiple requests effectively.
+
+    2. Introduction to Asynchronous Programming: The lecture introduces asynchronous programming by using the async keyword and the Task<ActionResult> return type. This allows API methods to delegate database queries to separate threads.
+
+    3. Methods for Asynchronous Operations: It covers the use of methods like ToListAsync and FindAsync to enable non-blocking database operations, allowing the original thread to continue servicing other requests.
+
+    4. Illustrative Analogy: A restaurant analogy is used to contrast synchronous and asynchronous operations, highlighting how asynchronous models improve service efficiency by allowing staff to multitask.
+
+    5. Testing with Postman: The lecture also discusses the use of Postman to test API endpoints, encouraging viewers to create a workspace for organizing requests and demonstrating how to import a pre-created Postman collection for easier testing.
+
+    6. Implementation Success: It concludes by emphasizing the successful implementation of asynchronous methods for efficient member data retrieval and sets the stage for upcoming lessons on saving work to source control.
+
+If you have any specific questions or need more clarification on any part, feel free to ask!
