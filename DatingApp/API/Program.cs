@@ -12,9 +12,14 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 });
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 //builder.Services.AddOpenApi();
+builder.Services.AddCors();
 
 var app = builder.Build();
 
+app.UseCors(opt =>
+{
+    opt.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200", "http://localhost:4200");
+});
 // this is not somthing we're going to use.
 
 // Configure the HTTP request pipeline.
