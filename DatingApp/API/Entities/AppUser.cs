@@ -9,4 +9,7 @@ public class AppUser
     public required string Email { get; set; }
     public required byte[] PasswordHash { get; set; }
     public required byte[] PasswordSalt { get; set; }
+
+    // after we add or update this file we also can use a command
+    // dotnet ef migrations add UserEntityUpdated
 }
