@@ -1,15 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { lastValueFrom } from 'rxjs/internal/lastValueFrom';
 import { Nav } from '../layout/nav/nav';
+import { AccountService } from '../core/services/account-service';
+import { Home } from '../features/home/home';
+import { User } from '../types/user';
+import { NgClass } from '@angular/common';
 
 @Component({
   // imports: [RouterOutlet],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',
-  imports: [Nav],
+  imports: [Nav, Home, RouterOutlet, NgClass],
 })
 export class App implements OnInit {
     // And instead we can use an inject method that we get from angular. 
@@ -17,12 +21,13 @@ export class App implements OnInit {
     // important, but typically what we'd use or 
     // how we would lay it out is we would have things that we inject at
     // the top of the class.
-  
+    private accountService = inject(AccountService);
+    protected router = inject(Router)
     private http = inject(HttpClient); // this's how we inject something or can inject somthing into an angular component
     // protected readonly title = signal('client');
     protected readonly title = "Dating app";
     // protected members: any;
-    protected members = signal<any>([]);
+    protected members = signal<User[]>([]);
     // this's how we inject something or can inject somthing into an angular component
     // constructor(private http: HttpClient) {
     // And then we don't need our constructor because we have it injected here.
@@ -43,11 +48,21 @@ export class App implements OnInit {
       //   }
       // });
       this.members.set(await this.getMembers());
+      this.setCurrentUser();
     }
  
+    setCurrentUser() {
+      const userString = localStorage.getItem('user');
+
+      if (!userString) return;
+      const user = JSON.parse(userString);
+      this.accountService.currentUser.set(user);
+
+    }
+
     async getMembers() {
       try {
-        return lastValueFrom(this.http.get('https://localhost:5001/api/members'));
+        return lastValueFrom(this.http.get<User[]>('https://localhost:5001/api/members'));
       } catch (error) {
         console.error(error);
         throw error;
