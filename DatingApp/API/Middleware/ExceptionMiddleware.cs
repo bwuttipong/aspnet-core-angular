@@ -10,7 +10,7 @@ using API.Errors;
 namespace API.Middleware
 {
     public class ExceptionMiddleware(RequestDelegate next, 
-        Logger<ExceptionMiddleware> logger, IHostEnvironment env)
+        ILogger<ExceptionMiddleware> logger, IHostEnvironment env)
     {
         public async Task InvokeAsync(HttpContext context)
         {
