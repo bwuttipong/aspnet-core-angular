@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace API.Entities
 {
@@ -26,6 +26,7 @@ namespace API.Entities
         [JsonIgnore]
         public List<Photo> Photos { get; set; } = [];
 
+        [JsonIgnore]
         // Navigation property
         [ForeignKey(nameof(Id))]
         public AppUser User { get; set; } = null!;
