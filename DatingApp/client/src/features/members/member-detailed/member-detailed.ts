@@ -7,21 +7,26 @@ import { Member } from '../../../types/member';
 import { filter } from 'rxjs';
 
 @Component({
-  imports: [AsyncPipe, RouterLink, RouterLinkActive, RouterOutlet],
+  imports: [RouterLink, RouterLinkActive, RouterOutlet],
   selector: 'app-member-detailed',
   styleUrl: './member-detailed.css',
   templateUrl: './member-detailed.html',
 })
 export class MemberDetailed implements OnInit {
-
-  private memberService = inject(MemberService);
+  // private memberService = inject(MemberService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  protected member$?: Observable<Member>;
+  // protected member$?: Observable<Member>;
+  protected member = signal<Member | undefined>(undefined);
   protected title = signal<string | undefined>('Profile');
 
   ngOnInit() {
-    this.member$ = this.loadMember();
+    // this.member$ = this.loadMember();
+    this.route.data.subscribe({
+      next: (data) => {
+        this.member.set(data['member']);
+      }
+    });
     this.title.set(this.route.firstChild?.snapshot?.title);
 
     this.router.events.pipe(
@@ -33,9 +38,9 @@ export class MemberDetailed implements OnInit {
     });
   }
 
-  loadMember() {
-    const id = this.route.snapshot.paramMap.get('id');
-    if(!id) return;
-    return this.memberService.getMember(id);
-  }
+  // loadMember() {
+  //   const id = this.route.snapshot.paramMap.get('id');
+  //   if(!id) return;
+  //   return this.memberService.getMember(id);
+  // }
 }
