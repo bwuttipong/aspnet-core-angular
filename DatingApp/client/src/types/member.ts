@@ -10,3 +10,10 @@ export type Member = {
   city: string
   country: string
 }
+
+export interface Photo {
+  id: number
+  url: string
+  publiceId: string | null
+  memberId: string
+}
