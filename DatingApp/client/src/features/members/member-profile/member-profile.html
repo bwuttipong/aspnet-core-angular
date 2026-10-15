@@ -9,6 +9,12 @@
             <span>{{member.lastActive | date: 'dd MMM yyyy h:mm a'}}</span>
         </div>
         <h3 class="text-lg font-semibold text-primary"> About {{member.displayName}}</h3>
-        <div>{{member.description}}</div>
+        @if (memberService.editMode()){
+            <form #editForm="ngForm" (ngSubmit)="updateProfile()" class="flex flex-col w-full gap-4">
+
+            </form>
+        } @else {
+            <div>{{member.description}}</div>
+        }
     </div>
 }
