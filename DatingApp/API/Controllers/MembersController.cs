@@ -52,6 +52,8 @@ namespace API.Controllers
             member.City = memberUpdateDto.City ?? member.City;
             member.Country = memberUpdateDto.Country ?? member.Country;
 
+            member.User.DisplayName = memberUpdateDto.DisplayName ?? member.User.DisplayName;
+
             memberRepository.Update(member); // optional
 
             if (await memberRepository.SaveAllAsync())return NoContent();
