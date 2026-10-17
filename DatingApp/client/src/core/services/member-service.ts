@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Service, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Member, Photo } from '../../types/member';
+import { EditableMember, Member, Photo } from '../../types/member';
 // import { AccountService } from './account-service';
 
 @Service()
@@ -24,6 +24,10 @@ export class MemberService {
     getMemberPhotos(id: string) {
         return this.http.get<Photo[]>(this.baseUrl + 'members/' + id + '/photos');
         // return this.http.get<Member>(this.baseUrl + 'members/' + id + '/photos', this.getHttpOptions());
+    }
+
+    updateMember(member: EditableMember) {  
+        return this.http.put(this.baseUrl + 'members', member);
     }
 
     // private getHttpOptions() {
