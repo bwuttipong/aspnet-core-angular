@@ -29,11 +29,11 @@ export class MemberDetailed implements OnInit {
 
   ngOnInit() {
     // this.member$ = this.loadMember();
-    this.route.data.subscribe({
-      next: (data) => {
-        this.member.set(data['member']);
-      }
-    });
+    // this.route.data.subscribe({
+    //   next: (data) => {
+    //     this.member.set(data['member']);
+    //   }
+    // });
     this.title.set(this.route.firstChild?.snapshot?.title);
 
     this.router.events.pipe(
