@@ -1,0 +1,13 @@
+<label class="floating-label">
+    <span>Display Name</span>
+    <input
+            class="input w-full text-left"
+            [class.input-error]="ngControl.control?.invalid
+            && ngControl.control?.touched" 
+            formControlName="displayName" 
+            placeholder="Display Name">
+            @if (ngControl.control?.invalid
+                && ngControl.control?.touched){
+                <div class="validation-hint text-error text-xs ">Display Name is required</div>
+            }
+</label>
