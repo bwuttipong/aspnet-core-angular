@@ -10,7 +10,7 @@ namespace API.Entities
     public class Member
     {
         public string Id { get; set; } = null!;
-        public DateOnly DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
         public string? ImageUrl { get; set; }
         public required string DisplayName { get; set; }
         // This is a consistent timezone, no matter where they are in the world.

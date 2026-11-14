@@ -18,11 +18,13 @@ namespace API.DTOs
         public string Password { get; set; } = "";
 
         [Required]
-        public string? Gender { get; set; } = string.Empty;
+        public string Gender { get; set; } = string.Empty;
         [Required]
-        public string? City { get; set; } = string.Empty;
+        public string City { get; set; } = string.Empty;
         [Required]
-        public string? Country { get; set; } = string.Empty;
+        public string Country { get; set; } = string.Empty;
+        [Required]
+        public DateTime DateOfBirth { get; set; }
 
     }
 }

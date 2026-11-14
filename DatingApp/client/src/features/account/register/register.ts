@@ -3,9 +3,11 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, Reac
 import { RegisterCreds, User } from '../../../types/user';
 import { AccountService } from '../../../core/services/account-service';
 import { JsonPipe } from '@angular/common';
+import { Router } from '@angular/router';
+import { TextInput } from '../../../shared/text-input/text-input';
 
 @Component({
-  imports: [ReactiveFormsModule, JsonPipe],
+  imports: [ReactiveFormsModule, TextInput],
   selector: 'app-register',
   styleUrl: './register.css',
   templateUrl: './register.html',
@@ -13,6 +15,7 @@ import { JsonPipe } from '@angular/common';
 export class Register {
    // these can also say a property.
   private accountService = inject(AccountService);
+  private router = inject(Router);
   private fb = inject(FormBuilder);
   membersFromHome = input.required<User[]>();
   cancelRegister = output<boolean>();
@@ -20,6 +23,7 @@ export class Register {
   protected credentialForm: FormGroup;
   protected profileForm: FormGroup;
   protected currentStep = signal(1);
+  protected validationErrors = signal<string[]>([]);
 
   constructor() {
     this.credentialForm = this.fb.group({
@@ -30,7 +34,7 @@ export class Register {
     });
 
     this.profileForm = this.fb.group({
-      gender: ['', Validators.required],
+      gender: ['male', Validators.required],
       dateOfBirth: ['', Validators.required],
       city: ['', Validators.required],
       country: ['', Validators.required]
@@ -70,7 +74,19 @@ export class Register {
   register () {
     if (this.profileForm.valid && this.credentialForm.valid) {
       const formData = {...this.credentialForm.value, ...this.profileForm.value};
-      console.log('Form Data:', formData);
+      // console.log('Form Data:', formData);
+
+      this.accountService.register(formData).subscribe({
+        next: () => { // we can just set this to be an empty parentheses here.
+          // console.log(response);
+          this.router.navigateByUrl('/members');
+          // this.cancel();
+        },
+        error: error => {
+          console.log(error);
+          this.validationErrors.set(error);
+        }
+      });
     }
     // console.log(this.creds);
     // this.accountService.register(this.creds).subscribe({
