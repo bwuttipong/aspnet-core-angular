@@ -1,13 +1,30 @@
 <label class="floating-label">
-    <span>Display Name</span>
+    <span>{{label()}}</span>
     <input
             class="input w-full text-left"
-            [class.input-error]="ngControl.control?.invalid
-            && ngControl.control?.touched" 
+            type="{{type()}}"
+            [max]="maxDate()"
+            [class.input-error]="control.invalid && control.touched"
+            [class.input-success]="control.valid && control.touched"
             formControlName="displayName" 
             placeholder="Display Name">
-            @if (ngControl.control?.invalid
-                && ngControl.control?.touched){
-                <div class="validation-hint text-error text-xs ">Display Name is required</div>
+            @if (control.hasError('required') && control.touched){
+                <div class="validation-hint text-error text-xs ">{{label()}} is required</div>
+            }
+            @if (control.hasError('email') && control.touched){
+                <div class="validation-hint text-error text-xs ">Invalid email address</div>
+            }
+            @if (control.hasError('minLength') && control.touched){
+                <div class="validation-hint text-error text-xs ">
+                    {{label()}} must be at least {{control.errors?.['minLength'].requiredLength}} characters long
+                </div>
+            }
+            @if (control.hasError('maxLength') && control.touched){
+                <div class="validation-hint text-error text-xs ">
+                    {{label()}} must be at most {{control.errors?.['maxLength'].requiredLength}} characters
+                </div>
+            }
+            @if (control.hasError('passwordMismatch') && control.touched){
+                <div class="validation-hint text-error text-xs ">Passwords do not match</div>
             }
 </label>
