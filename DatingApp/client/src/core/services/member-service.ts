@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Service, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { EditableMember, Member, Photo } from '../../types/member';
 import { tap } from 'rxjs';
+import { PaginatedResult } from '../../types/pagination';
 // import { AccountService } from './account-service';
 
 @Service()
@@ -12,8 +13,16 @@ export class MemberService {
     private baseUrl = environment.apiUrl;
     editMode = signal(false);
     member = signal<Member | null>(null);
-    getMembers() {
-         return this.http.get<Member[]>(this.baseUrl + 'members');
+
+    getMembers(pageNumber = 1, pageSize = 5) {
+
+         let params = new HttpParams();
+         params = params.append('pageNumber', pageNumber);
+         params = params.append('pageSize', pageSize);
+
+         return this.http.get<PaginatedResult<Member>>(this.baseUrl + 'members', {
+            params: params
+        });
         // return this.http.get<Member[]>(this.baseUrl + 'members', this.getHttpOptions());
     }
 

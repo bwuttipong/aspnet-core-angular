@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Entities;
+using API.Helpers;
 using API.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,11 +23,16 @@ namespace API.Data
                 .Include(x => x.Photos)
                 .SingleOrDefaultAsync(x => x.Id == id);
         }
-        public async Task<IReadOnlyList<Member>> GetMembersAsync()
+        public async Task<PaginatedResult<Member>> GetMembersAsync(PagingParams pagingParams)
         {
-            return await context.Members
-                .Include(x => x.Photos)
-                .ToListAsync();
+            var query = context.Members.AsQueryable();
+
+            // return await context.Members
+            //     .Include(x => x.Photos)
+            //     .ToListAsync();
+
+            return await PaginationHelper.CreateAsync(query, 
+                pagingParams.PageNumber, pagingParams.PageSize);
         }
 
         public async Task<IReadOnlyList<Photo>> GetPhotosForMemberAsync(string memberId)
