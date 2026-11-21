@@ -1,4 +1,4 @@
-@if(paginatedMembers$ | async; as paginatedResult) {
+@if(paginatedMembers(); as paginatedResult) {
 
     @if (paginatedResult.metadata; as metadata) {
         <app-paginator
@@ -6,7 +6,7 @@
             [totalCount]="metadata.totalCount"
             [totalPages]="metadata.totalPages"
             [pageSize]="metadata.pageSize"
-            (pageChange)="onPageChange($event)"
+            (pageChange)="onPageChanged($event)"
         />
 
     }

@@ -23,7 +23,7 @@ namespace API.Data
                 .Include(x => x.Photos)
                 .SingleOrDefaultAsync(x => x.Id == id);
         }
-        public async Task<PaginatedResult<Member>> GetMembersAsync(PagingParams pagingParams)
+        public async Task<PaginatedResult<Member>> GetMembersAsync(MemberParams memberParams)
         {
             var query = context.Members.AsQueryable();
 
@@ -31,8 +31,20 @@ namespace API.Data
             //     .Include(x => x.Photos)
             //     .ToListAsync();
 
+            query = query.Where(x => x.Id != memberParams.CurrentMemberId);
+
+            if (memberParams.Gender is not null)
+            {
+                query = query.Where(x => x.Gender == memberParams.Gender);
+            }
+
+            var minDob = DateTime.Today.AddYears(-memberParams.MaxAge - 1);
+            var maxDob = DateTime.Today.AddYears(-memberParams.MinAge);
+
+            query = query.Where(x => x.DateOfBirth > minDob && x.DateOfBirth <= maxDob);
+
             return await PaginationHelper.CreateAsync(query, 
-                pagingParams.PageNumber, pagingParams.PageSize);
+                memberParams.PageNumber, memberParams.PageSize);
         }
 
         public async Task<IReadOnlyList<Photo>> GetPhotosForMemberAsync(string memberId)
