@@ -4,13 +4,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Text.Json.Serialization;
+using API.Helpers;
 
 namespace API.Entities
 {
     public class Member
     {
         public string Id { get; set; } = null!;
-        public DateTime DateOfBirth { get; set; }
+        public DateOnly DateOfBirth { get; set; }
         public string? ImageUrl { get; set; }
         public required string DisplayName { get; set; }
         // This is a consistent timezone, no matter where they are in the world.
@@ -25,6 +26,11 @@ namespace API.Entities
         // Navigation property
         [JsonIgnore]
         public List<Photo> Photos { get; set; } = [];
+
+        [JsonIgnore]
+        public List<MemberLike> LikeByMembers { get; set; } = [];
+        [JsonIgnore]
+        public List<MemberLike> LikedMembers { get; set; } = [];
 
         [JsonIgnore]
         // Navigation property

@@ -24,7 +24,7 @@ namespace API.DTOs
         [Required]
         public string Country { get; set; } = string.Empty;
         [Required]
-        public DateTime DateOfBirth { get; set; }
+        public DateOnly DateOfBirth { get; set; }
 
     }
 }

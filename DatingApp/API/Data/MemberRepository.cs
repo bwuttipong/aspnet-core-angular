@@ -39,10 +39,10 @@ namespace API.Data
                 query = query.Where(x => x.Gender == memberParams.Gender);
             }
 
-            var minDob = DateTime.Today.AddYears(-memberParams.MaxAge - 1);
-            var maxDob = DateTime.Today.AddYears(-memberParams.MinAge);
+            var minDob = DateOnly.FromDateTime(DateTime.Today.AddYears(-memberParams.MaxAge - 1));
+            var maxDob = DateOnly.FromDateTime(DateTime.Today.AddYears(-memberParams.MinAge));
 
-            query = query.Where(x => x.DateOfBirth > minDob && x.DateOfBirth <= maxDob);
+            query = query.Where(x => x.DateOfBirth >= minDob && x.DateOfBirth <= maxDob);
 
             query = memberParams.OrderBy switch
             {
